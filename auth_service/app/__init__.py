@@ -10,5 +10,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
 Session = db.create_session({})
 
-from . import auth_controller
-from . import exeption_handler
+from .controller import auth_controller
