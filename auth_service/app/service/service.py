@@ -51,6 +51,9 @@ def update_user(user_dto):
 	if user.id is None or user.username is None or user.password_hash is None:
 		raise IllegalRequestFormatException('Wrong user data!')
 
+	if user_repository.find_user_by_username(user.username) is not None:
+		raise IllegalRequestFormatException('User exits')
+
 	user.password_hash = bcrypt.hashpw(bytes(user.password_hash.encode()), bcrypt.gensalt()).decode()
 	user_repository.update_user(user)
 	session_controller.end_session()
