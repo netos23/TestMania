@@ -1,18 +1,8 @@
 from sqlalchemy import delete
-from sqlalchemy.orm import sessionmaker
 
-from app import db
-from domain import User
-
-engine = None
-Session = None
-
-
-def setup_database():
-	global engine, Session
-	db.drop_all(engine)
-	db.create_all(engine)
-	Session = sessionmaker(db.engine)
+# from app import db
+from app import Session
+from app.domain import User
 
 
 def add_user(user):
@@ -32,20 +22,20 @@ def find_user_by_username(username):
 			.one()
 
 
-def update_user(user_dto):
+def update_user(updated_user):
 	with Session.begin() as session:
 		user = session.query(User) \
-			.filter(User.id == user_dto.id) \
+			.filter(User.id == updated_user.id) \
 			.one()
 
-		user.username = user_dto.username
-		user.password_hash = user_dto.password_hash
+		user.username = updated_user.username
+		user.password_hash = updated_user.password_hash
 
 		session.flush()
 
 
-def delete_user_by_id(id):
+def delete_user_by_id(user):
 	with Session.begin() as session:
 		session.execute(
-			delete(User).where(User.id == id)
+			delete(User).where(User.id == user.id)
 		)
