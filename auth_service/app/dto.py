@@ -14,6 +14,11 @@ class ErrorResponse:
 		timestamp = time.time()
 		return ErrorResponse(400, 'Bad request', timestamp)
 
+	@staticmethod
+	def build_access_denied():
+		timestamp = time.time()
+		return ErrorResponse(403, 'Access denied', timestamp)
+
 	def __init__(self, code, message, timestamp):
 		self.timestamp = timestamp
 		self.message = message
@@ -29,9 +34,7 @@ class SuccessResponse:
 		self.status = status
 
 
-
 class TokensResponse:
-	def __init__(self, auth, refresh, expired):
-		self.expired = expired
+	def __init__(self, access, refresh):
 		self.refresh = refresh
-		self.auth = auth
+		self.auth = access
