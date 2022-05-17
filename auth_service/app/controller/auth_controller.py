@@ -4,7 +4,7 @@ from types import SimpleNamespace
 from flask import request, jsonify
 
 from app import app
-from app import service as auth_service
+from app.service import service as auth_service
 from app.dto import SuccessResponse, TokensResponse
 
 
@@ -24,8 +24,8 @@ def edit_user():
 	return jsonify(SuccessResponse.build_ok().__dict__)
 
 
-@app.route('/remove', methods=['POST'])
-def remove_user():
+@app.route('/delete', methods=['POST'])
+def delete_user():
 	user_dto = json.loads(request.data, object_hook=lambda d: SimpleNamespace(**d))
 	auth_service.delete_user(user_dto)
 

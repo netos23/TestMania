@@ -35,6 +35,6 @@ class SuccessResponse:
 
 
 class TokensResponse:
-	def __init__(self, access, refresh):
-		self.refresh = refresh
-		self.auth = access
+	def __init__(self, access_token, refresh_token):
+		self.refresh_token = refresh_token
+		self.access_token = access_token
