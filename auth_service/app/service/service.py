@@ -78,6 +78,7 @@ def login(user_dto):
 	user_from_db = user_repository.find_user_by_username(user.username)
 
 	if user_from_db is None:
+		session_controller.end_session()
 		raise AccessDeniedException('Wrong user data!')
 
 	password = bytes(user.password_hash.encode())
@@ -125,26 +126,35 @@ def extract_token(token: str):
 def validate(token):
 	session_controller.begin_session()
 	access_token = extract_token(token)
-	validate_token(access_token, app.config['ACCESS_TOKEN_SECRET'])
+
+	try:
+		validate_token(access_token, app.config['ACCESS_TOKEN_SECRET'])
+	except Exception:
+		session_controller.end_session()
+		raise AccessDeniedException('Invalid or expired token')
+
 	session_controller.end_session()
 
 
 def validate_token(token, key):
-	try:
-		return jwt.decode(token, key, algorithms=["HS256"], options={'verify_exp': True})
-	except Exception:
-		raise AccessDeniedException('Invalid or expired token')
+	return jwt.decode(token, key, algorithms=["HS256"], options={'verify_exp': True})
 
 
 def refresh(refresh_token_dto):
 	session_controller.begin_session()
 	refresh_token = map_token_from_dto(refresh_token_dto)
-	payload = validate_token(refresh_token, app.config['REFRESH_TOKEN_SECRET'])
+
+	try:
+		payload = validate_token(refresh_token, app.config['REFRESH_TOKEN_SECRET'])
+	except Exception:
+		session_controller.end_session()
+		raise AccessDeniedException('Invalid or expired token')
 
 	username = payload['username']
 	user_refresh_token = UserRefreshToken(username=username, token=refresh_token)
 
 	if not token_repository.has_user_token(user_refresh_token):
+		session_controller.end_session()
 		raise AccessDeniedException('Invalid or expired token')
 
 	token_repository.delete_user_token(user_refresh_token)

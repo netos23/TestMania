@@ -20,9 +20,7 @@ class UserRepository:
 			.one_or_none()
 
 	def update_user(self, updated_user):
-		user = self.session_maker.current_session().query(User) \
-			.filter_by(id=updated_user.id) \
-			.one_or_none()
+		user = self.find_user_by_id(updated_user)
 
 		user.username = updated_user.username
 		user.password_hash = updated_user.password_hash
