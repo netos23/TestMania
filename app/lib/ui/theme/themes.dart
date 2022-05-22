@@ -9,7 +9,7 @@ final textTheme = TextTheme(
     letterSpacing: -1.5,
   ),
   headline2: GoogleFonts.roboto(
-      fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+      fontSize: 60, fontWeight: FontWeight.w700, letterSpacing: -0.5),
   headline3: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w400),
   headline4: GoogleFonts.roboto(
       fontSize: 34, fontWeight: FontWeight.w400, letterSpacing: 0.25),
