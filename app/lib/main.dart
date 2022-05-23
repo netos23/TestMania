@@ -1,4 +1,5 @@
 import 'package:app/ui/pages/auth_page.dart';
+import 'package:app/ui/pages/registration_page.dart';
 import 'package:app/ui/theme/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/theme/themes.dart' as themes;
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: context.watch<ThemeCubit>().state,
-      home: const AuthPage(),
+      home: const RegistrationPage(),
     );
   }
 }
