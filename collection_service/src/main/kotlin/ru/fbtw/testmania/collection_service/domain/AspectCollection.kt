@@ -16,7 +16,7 @@ class AspectCollection(
 
     @ManyToMany
     @JoinTable(
-        name = "aspect collection",
+        name = "aspect_collection",
         joinColumns = [JoinColumn(name = "collection_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "aspect_id", referencedColumnName = "id")],
     )
