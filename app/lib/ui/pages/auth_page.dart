@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AuthPage extends StatefulWidget {
+class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key);
-
-  @override
-  State<AuthPage> createState() => _AuthPageState();
-}
-
-class _AuthPageState extends State<AuthPage> {
-  bool hasError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +22,9 @@ class _AuthPageState extends State<AuthPage> {
                   style: textTheme.headline2,
                 ),
               ),
-              Flexible(
+              const Flexible(
                 flex: 1,
-                child: _buildAuthForm(),
+                child: AuthForm(),
               ),
               Flexible(
                 flex: 1,
@@ -46,14 +39,20 @@ class _AuthPageState extends State<AuthPage> {
       ),
     );
   }
+}
 
-  Widget _buildAuthForm() {
+class AuthForm extends StatelessWidget {
+  const AuthForm({Key? key}) : super(key: key);
+
+  final bool hasError = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
       child: Container(
         constraints: const BoxConstraints(maxWidth: 300),
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
               flex: 3,
@@ -65,42 +64,50 @@ class _AuthPageState extends State<AuthPage> {
             ),
             Flexible(
               flex: 3,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  _buildFormField(
-                    icon: Icons.password,
-                    label: 'Password',
-                    tooltip: 'Enter your password',
-                    obscureText: true,
-                  ),
-                  Positioned(
-                    //todo: normal value
-                    bottom: hasError ? -5 : -20,
-                    right: -20,
-                    child: FloatingActionButton(
-                      child: const Icon(
-                        Icons.navigate_next,
-                      ),
-                      onPressed: () {},
-                    ),
-                  )
-                ],
-              ),
+              child: _buildFormFieldWithSubmit(),
             ),
-            const Flexible(
+            Flexible(
               flex: 1,
-              child: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  'Create account',
-                  textAlign: TextAlign.start,
-                ),
-              ),
+              child: _buildRegisterLink(),
             )
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildRegisterLink() {
+    return const SizedBox(
+      width: double.infinity,
+      child: Text(
+        'Create account',
+        textAlign: TextAlign.start,
+      ),
+    );
+  }
+
+  Widget _buildFormFieldWithSubmit() {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        _buildFormField(
+          icon: Icons.password,
+          label: 'Password',
+          tooltip: 'Enter your password',
+          obscureText: true,
+        ),
+        Positioned(
+          //todo: normal value
+          bottom: hasError ? -5 : -20,
+          right: -20,
+          child: FloatingActionButton(
+            child: const Icon(
+              Icons.navigate_next,
+            ),
+            onPressed: () {},
+          ),
+        )
+      ],
     );
   }
 
