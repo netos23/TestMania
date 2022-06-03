@@ -8,7 +8,7 @@ class DataResource (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Int,
+    var id: Int?,
 
     @Column(name = "name")
     var name: String,

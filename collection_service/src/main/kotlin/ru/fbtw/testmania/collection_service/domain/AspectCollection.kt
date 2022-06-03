@@ -9,7 +9,7 @@ class AspectCollection(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private var id: Int,
+    var id: Int?,
 
     @Column(name = "name")
     var name: String,

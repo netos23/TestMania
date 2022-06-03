@@ -1,6 +1,5 @@
 package ru.fbtw.testmania.collection_service.domain
 
-import org.hibernate.annotations.LazyGroup
 import javax.persistence.*
 
 @Entity
@@ -9,12 +8,15 @@ class Aspect(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private var id: Int,
+    var id: Int?,
 
     @Column(name = "name")
     var name: String,
 
-    @ManyToMany
+    @ManyToMany(
+        cascade = [CascadeType.ALL],
+//        fetch = FetchType.EAGER,
+    )
     @JoinTable(
         name = "aspect_data_resource",
         joinColumns = [JoinColumn(name = "aspect_id", referencedColumnName = "id")],
@@ -23,7 +25,10 @@ class Aspect(
     var resources: MutableList<DataResource>,
 
 
-    @ManyToMany
+    @ManyToMany(
+        cascade = [CascadeType.ALL],
+//        fetch = FetchType.EAGER,
+    )
     @JoinTable(
         name = "aspect_steppers",
         joinColumns = [JoinColumn(name = "aspect_id", referencedColumnName = "id")],

@@ -14,13 +14,13 @@ class AspectController(
 
     @GetMapping(value = ["/aspects/{collection_id}"])
     fun findAspectsByCollection(
-        @PathVariable("collection_id") collection: AspectCollection
+        @PathVariable("collection_id") collection: AspectCollection?
     ) = aspectService.findAspectsByCollection(collection)
 
     @GetMapping(value = ["/aspect/{id}"])
     fun getAspect(
         @PathVariable(value = "id")
-        aspect: Aspect,
+        aspect: Aspect?,
     ) = aspectService.getAspect(aspect)
 
     @PostMapping(value = ["/aspect"])

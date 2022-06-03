@@ -8,7 +8,7 @@ class StepperStep(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Int,
+    var id: Int?,
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stepper_tag")

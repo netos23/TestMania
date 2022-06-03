@@ -2,6 +2,10 @@ version: '2.1'
 
 services:
 
+  message_queue:
+    image: 'rabbitmq:3.10.2-alpine'
+
+
   collection_service:
     image: 'collection_service_image:latest'
     build: ./collection_service/
